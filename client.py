@@ -5,12 +5,14 @@ import select
 # This is syntax to tell what type of socket connection, AF_INET: internet, SOCK_STREAM: streaming connection
 my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # Establishes connection between application to connect to server listening on port 555 on local machine "local host" 
-my_socket.connect(("localhost", 5555))
+#my_socket.connect(("localhost", 5555))
+my_socket.connect(("10.1.10.100", 5555))
 
 running = True
 while running:
     # user_input = sys.stdin.readline()
     inputready, outputready, exceptready = select.select([my_socket, sys.stdin], [], [])
+# NOTE this does not go in infinite loop because select is like cursor
 
     for s in inputready:
         if type(s) == type(my_socket):
@@ -31,6 +33,7 @@ while running:
 # my_socket.sendall(user_input)
 
 
+# NOTE: This one only asks once the user to give login name and stops. The one above keeps waitng for responses. 
 
 # # TODO Receive 1024 bytes from the socket (connected to the server??) and displays
 # # how write read parallels?
@@ -48,4 +51,4 @@ while running:
 # data = my_socket.recv(1024)
 # print "received:\n%s" % data
 
-my_socket.close()
+# my_socket.close()
